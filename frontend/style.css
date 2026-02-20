@@ -849,6 +849,41 @@ main {
     background: linear-gradient(90deg, #EF4444, #DC2626);
 }
 
+/* ===== Download PDF Button ===== */
+.download-pdf-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: 20px;
+    padding: 13px 24px;
+    border: none;
+    border-radius: 14px;
+    background: var(--gradient-btn);
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(232, 73, 141, 0.25);
+}
+
+.download-pdf-btn:hover {
+    background: var(--gradient-btn-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(232, 73, 141, 0.35);
+}
+
+.download-pdf-btn:active {
+    transform: translateY(0);
+}
+
+.download-pdf-btn svg {
+    flex-shrink: 0;
+}
+
 /* ===== Filter Tabs ===== */
 .filter-tabs {
     position: relative;
