@@ -12,13 +12,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/5.0.2/jspdf.plugin.autotable.min.js"></script>
 </head>
 <body>
-    <!-- Animated mesh gradient background -->
     <div class="bg-gradient"></div>
 
-    <!-- Floating sparkle particles -->
+
     <div class="particles" id="particles"></div>
 
-    <!-- Floating blobs -->
     <div class="bg-shapes">
         <div class="shape shape-1"></div>
         <div class="shape shape-2"></div>
@@ -28,7 +26,6 @@
         <div class="shape shape-6"></div>
     </div>
 
-    <!-- Header -->
     <header>
         <div class="logo">
             <div class="logo-icon">
@@ -40,14 +37,11 @@
         </div>
     </header>
 
-    <!-- Main Content -->
+    
     <main>
-        <!-- Hero Section -->
         <section class="hero">
             <h1><span class="gradient-text">Detoxify</span></h1>
         </section>
-
-        <!-- URL Input Section -->
         <section class="input-section">
             <div class="input-card">
                 <div class="input-wrapper">
@@ -82,7 +76,6 @@
             </div>
         </section>
 
-        <!-- Feature pills -->
         <section class="features-row">
             <div class="feature-pill">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
@@ -98,7 +91,6 @@
             </div>
         </section>
 
-        <!-- Error Display -->
         <div id="errorDisplay" class="error-display" style="display:none;">
             <div class="error-content">
                 <div class="error-icon">
@@ -112,7 +104,7 @@
             </div>
         </div>
 
-        <!-- Video Info Section -->
+        
         <section id="videoInfo" class="video-info" style="display:none;">
             <div class="video-card">
                 <div class="video-thumbnail">
@@ -156,7 +148,6 @@
             </div>
         </section>
 
-        <!-- Analysis Dashboard -->
         <section id="analysisDashboard" class="analysis-dashboard" style="display:none;">
             <div class="dashboard-card">
                 <div class="dashboard-header">
@@ -208,7 +199,7 @@
             </div>
         </section>
 
-        <!-- Filter Tabs -->
+        
         <section id="filterTabs" class="filter-tabs" style="display:none;">
             <button class="filter-btn active" data-filter="all" onclick="filterComments('all')">All</button>
             <button class="filter-btn" data-filter="safe" onclick="filterComments('safe')">Safe</button>
@@ -216,7 +207,7 @@
             <button class="filter-btn" data-filter="high" onclick="filterComments('high')">High Severity</button>
         </section>
 
-        <!-- Comments Section -->
+        
         <section id="commentsSection" class="comments-section" style="display:none;">
             <div class="comments-header">
                 <div class="comments-title-row">
@@ -233,18 +224,8 @@
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-content">
-            <span>Built with 💜 for <strong>Tink-Her-Hack</strong></span>
-            <span class="footer-dot">·</span>
-            <span>Building safer spaces for women online</span>
-        </div>
-    </footer>
-
     <script src="script.js"></script>
     <script>
-        // Generate floating sparkle particles
         (function() {
             const container = document.getElementById('particles');
             for (let i = 0; i < 25; i++) {

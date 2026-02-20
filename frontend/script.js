@@ -1,13 +1,10 @@
 const API_BASE = "http://127.0.0.1:5000";
 
-// Store comments globally for filtering
 let allComments = [];
 let currentVideoInfo = null;
 let currentAnalysis = null;
 
-/**
- * Main function: fetches YouTube comments and runs AI analysis
- */
+
 async function fetchComments() {
     const urlInput = document.getElementById("youtubeUrl");
     const analyzeBtn = document.getElementById("analyzeBtn");
@@ -26,14 +23,12 @@ async function fetchComments() {
         return;
     }
 
-    // Reset UI
     hideError();
     videoInfo.style.display = "none";
     commentsSection.style.display = "none";
     dashboard.style.display = "none";
     filterTabs.style.display = "none";
 
-    // Show loading state
     analyzeBtn.disabled = true;
     btnText.innerHTML = `
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
@@ -56,18 +51,14 @@ async function fetchComments() {
             return;
         }
 
-        // Store comments globally
+        
         allComments = data.comments;
         currentVideoInfo = data.video;
         currentAnalysis = data.analysis;
-
-        // Display video info
         displayVideoInfo(data.video);
-
-        // Display analysis dashboard
         displayDashboard(data.analysis);
 
-        // Display filter tabs and comments
+        
         filterTabs.style.display = "flex";
         resetFilterButtons();
         displayComments(data.comments, data.totalFetched);
@@ -90,9 +81,7 @@ async function fetchComments() {
     }
 }
 
-/**
- * Display video information card
- */
+
 function displayVideoInfo(video) {
     const section = document.getElementById("videoInfo");
     document.getElementById("videoThumbnail").src = video.thumbnail;
@@ -104,9 +93,6 @@ function displayVideoInfo(video) {
     section.style.display = "block";
 }
 
-/**
- * Display the analysis dashboard with stats
- */
 function displayDashboard(analysis) {
     const dashboard = document.getElementById("analysisDashboard");
 
@@ -119,7 +105,7 @@ function displayDashboard(analysis) {
     const percent = analysis.toxicityPercentage;
     document.getElementById("toxicityPercent").textContent = percent + "%";
 
-    // Animate the toxicity bar
+    
     const fill = document.getElementById("toxicityFill");
     fill.style.width = "0%";
     fill.className = "toxicity-fill";
@@ -133,11 +119,7 @@ function displayDashboard(analysis) {
     dashboard.style.display = "block";
 }
 
-/**
- * Filter comments by category
- */
 function filterComments(filter) {
-    // Update active button
     document.querySelectorAll(".filter-btn").forEach(btn => {
         btn.classList.toggle("active", btn.dataset.filter === filter);
     });
@@ -166,9 +148,7 @@ function resetFilterButtons() {
     });
 }
 
-/**
- * Display comments list with stagger animation
- */
+
 function displayComments(comments, totalFetched, scroll = true) {
     const section = document.getElementById("commentsSection");
     const list = document.getElementById("commentsList");
@@ -202,14 +182,12 @@ function displayComments(comments, totalFetched, scroll = true) {
     }
 }
 
-/**
- * Create a single comment card element with analysis badge
- */
+
 function createCommentCard(comment, number) {
     const card = document.createElement("div");
     card.className = "comment-card";
 
-    // Add severity class for flagged comments
+    
     if (comment.isFlagged) {
         card.classList.add("flagged");
         card.classList.add(`severity-${comment.severity}`);
@@ -226,7 +204,7 @@ function createCommentCard(comment, number) {
         avatarHtml = `<div class="comment-avatar-placeholder">${initial}</div>`;
     }
 
-    // Build the analysis badge
+    
     let analysisBadge = "";
     if (comment.isFlagged) {
         const severityLabel = comment.severity.charAt(0).toUpperCase() + comment.severity.slice(1);
@@ -276,7 +254,7 @@ function createCommentCard(comment, number) {
     return card;
 }
 
-// ===== Utilities =====
+
 
 function showError(message) {
     const errorDisplay = document.getElementById("errorDisplay");
@@ -321,9 +299,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-/**
- * Generate a PDF report of flagged comments using jsPDF
- */
+
 function generatePDF() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
@@ -331,9 +307,8 @@ function generatePDF() {
     const margin = 16;
     let y = 20;
 
-    // ===== HEADER =====
-    // Purple header bar
-    doc.setFillColor(232, 73, 141); // pink-500
+    
+    doc.setFillColor(232, 73, 141); 
     doc.rect(0, 0, pageWidth, 38, 'F');
 
     // Title
@@ -346,7 +321,7 @@ function generatePDF() {
     doc.setFont('helvetica', 'normal');
     doc.text('Harassment Evidence Report', margin, 27);
 
-    // Date on the right
+    
     const dateStr = new Date().toLocaleDateString('en-US', {
         year: 'numeric', month: 'long', day: 'numeric'
     });
@@ -355,7 +330,7 @@ function generatePDF() {
 
     y = 50;
 
-    // ===== VIDEO INFO =====
+    
     doc.setTextColor(40, 40, 40);
     doc.setFontSize(11);
     doc.setFont('helvetica', 'bold');
@@ -371,7 +346,7 @@ function generatePDF() {
         const channel = currentVideoInfo.channelTitle || 'Unknown';
         const url = document.getElementById('youtubeUrl').value.trim();
 
-        // Wrap long titles
+        
         const titleLines = doc.splitTextToSize('Title: ' + videoTitle, pageWidth - margin * 2);
         doc.text(titleLines, margin, y);
         y += titleLines.length * 5 + 2;
@@ -382,7 +357,7 @@ function generatePDF() {
         y += 10;
     }
 
-    // ===== SUMMARY STATS =====
+    
     doc.setTextColor(40, 40, 40);
     doc.setFontSize(11);
     doc.setFont('helvetica', 'bold');
@@ -390,7 +365,6 @@ function generatePDF() {
     y += 8;
 
     if (currentAnalysis) {
-        // Summary boxes
         const stats = [
             { label: 'Total', value: currentAnalysis.totalComments, color: [100, 100, 100] },
             { label: 'Safe', value: currentAnalysis.safeCount, color: [16, 185, 129] },
@@ -402,17 +376,17 @@ function generatePDF() {
         stats.forEach((stat, i) => {
             const x = margin + i * (boxWidth + 5);
 
-            // Box background
+            
             doc.setFillColor(stat.color[0], stat.color[1], stat.color[2]);
             doc.roundedRect(x, y, boxWidth, 22, 3, 3, 'F');
 
-            // Value
+            
             doc.setTextColor(255, 255, 255);
             doc.setFontSize(14);
             doc.setFont('helvetica', 'bold');
             doc.text(String(stat.value), x + boxWidth / 2, y + 10, { align: 'center' });
 
-            // Label
+            
             doc.setFontSize(7);
             doc.setFont('helvetica', 'normal');
             doc.text(stat.label.toUpperCase(), x + boxWidth / 2, y + 18, { align: 'center' });
@@ -420,7 +394,7 @@ function generatePDF() {
 
         y += 32;
 
-        // Severity breakdown
+       
         doc.setTextColor(80, 80, 80);
         doc.setFontSize(8);
         doc.setFont('helvetica', 'normal');
@@ -428,7 +402,7 @@ function generatePDF() {
         y += 10;
     }
 
-    // ===== FLAGGED COMMENTS TABLE =====
+    
     const flaggedComments = allComments.filter(c => c.isFlagged);
 
     doc.setTextColor(40, 40, 40);
@@ -481,7 +455,6 @@ function generatePDF() {
                 4: { cellWidth: 22, halign: 'center' },
             },
             didParseCell: function(data) {
-                // Color severity cells
                 if (data.section === 'body' && data.column.index === 3) {
                     const val = data.cell.raw;
                     if (val === 'High') data.cell.styles.textColor = [220, 38, 38];
@@ -492,18 +465,18 @@ function generatePDF() {
         });
     }
 
-    // ===== FOOTER on last page =====
+   
     const pageCount = doc.internal.getNumberOfPages();
     for (let p = 1; p <= pageCount; p++) {
         doc.setPage(p);
         const pageH = doc.internal.pageSize.getHeight();
 
-        // Footer line
+        
         doc.setDrawColor(230, 220, 240);
         doc.setLineWidth(0.5);
         doc.line(margin, pageH - 18, pageWidth - margin, pageH - 18);
 
-        // Footer text
+        
         doc.setFontSize(7);
         doc.setTextColor(160, 160, 160);
         doc.setFont('helvetica', 'normal');
@@ -512,7 +485,7 @@ function generatePDF() {
         doc.text(`Page ${p} of ${pageCount}`, pageWidth - margin, pageH - 12, { align: 'right' });
     }
 
-    // Save
+   
     const filename = currentVideoInfo
         ? `Detoxify_Report_${currentVideoInfo.title.substring(0, 30).replace(/[^a-zA-Z0-9]/g, '_')}.pdf`
         : 'Detoxify_Report.pdf';
